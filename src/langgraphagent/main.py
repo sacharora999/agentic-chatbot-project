@@ -19,7 +19,13 @@ def load_langgraph_agentic_app():
 
     if user_message:
         try:
-            obj_llm_config=Groqllm(user_controls_input=user_input)
+            obj_llm_config_groq=Groqllm(user_controls_input=user_input)
+            obj_llm_config_openai=OpenAIllm(user_controls_input=user_input)
+
+            if user_input["selected_llm"] == "OpenAI":
+                obj_llm_config=obj_llm_config_openai
+            else:
+                obj_llm_config=obj_llm_config_groq
             model=obj_llm_config.get_llm_models()
             if not model:
                 st.error("Model could not be initialized")
